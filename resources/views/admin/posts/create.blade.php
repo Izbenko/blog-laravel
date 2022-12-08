@@ -23,7 +23,7 @@
 
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
+                <div class="row w-50">
                     <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
