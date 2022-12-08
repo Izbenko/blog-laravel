@@ -77,7 +77,7 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
         $category->update($data);
-        return redirect()->route('admin.categories.show', $category->id);
+        return view('admin.categories.show', compact('category'));
     }
 
     /**

@@ -78,7 +78,7 @@ class TagController extends Controller
     {
         $data = $request->validated();
         $tag->update($data);
-        return redirect()->route('admin.tags.show', $tag->id);
+        return view('admin.tags.show', compact('tag'));
     }
 
     /**
