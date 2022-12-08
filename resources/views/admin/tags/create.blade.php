@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Редактирование категории "{{ $category->title }}"</h1>
+                        <h1 class="m-0">Добавление тега</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -24,17 +24,16 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <form action="{{ route('admin.categories.update', $category->id) }}" method="post" class="col-4">
-                        @method('PATCH')
+                    <form action="{{ route('admin.tags.store') }}" method="post" class="col-4">
                         @csrf
                         <div class="form-group">
                             <label>Название</label>
-                            <input type="text" class="form-control" name="title" placeholder="Название категории" value="{{ $category->title }}">
+                            <input type="text" class="form-control" name="title" placeholder="Название тега">
                             @error('title')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Обновить">
+                        <input type="submit" class="btn btn-primary" value="Добавить">
                     </form>
                 </div>
             </div>

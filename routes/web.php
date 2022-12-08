@@ -22,7 +22,18 @@ Route::group(['prefix' => 'admin'], function () {
         'destroy' => 'admin.categories.destroy',
         'edit' => 'admin.categories.edit',
     ]);
+    Route::resource('tags', \App\Http\Controllers\Admin\TagController::class)->names([
+        'index' => 'admin.tags.index',
+        'store' => 'admin.tags.store',
+        'create' => 'admin.tags.create',
+        'show' => 'admin.tags.show',
+        'update' => 'admin.tags.update',
+        'destroy' => 'admin.tags.destroy',
+        'edit' => 'admin.tags.edit',
+    ]);
 });
+
+
 
 Auth::routes();
 
