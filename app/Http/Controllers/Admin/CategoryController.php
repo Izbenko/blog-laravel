@@ -75,7 +75,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, Category $category)
     {
-        $data = $request->validated();
+            $data = $request->validated();
         $category->update($data);
         return view('admin.categories.show', compact('category'));
     }

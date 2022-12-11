@@ -10,8 +10,31 @@ Route::get('/', [PostController::class, 'index']);
 
 Route::resource('posts', PostController::class);
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', [\App\Http\Controllers\Admin\PostController::class, 'index']);
+Route::group(['prefix' => 'personal', 'middleware' => 'auth'], function () {
+    Route::get('/', \App\Http\Controllers\Personal\MainController::class)->name('personal.main.index');
+
+    Route::resource('liked', \App\Http\Controllers\Personal\LikedController::class)->names([
+        'index' => 'personal.liked.index',
+        'store' => 'personal.liked.store',
+        'create' => 'personal.liked.create',
+        'show' => 'personal.liked.show',
+        'update' => 'personal.liked.update',
+        'destroy' => 'personal.liked.destroy',
+        'edit' => 'personal.liked.edit',
+    ]);
+    Route::resource('comments', \App\Http\Controllers\Personal\CommentController::class)->names([
+        'index' => 'personal.comments.index',
+        'store' => 'personal.comments.store',
+        'create' => 'personal.comments.create',
+        'show' => 'personal.comments.show',
+        'update' => 'personal.comments.update',
+        'destroy' => 'personal.comments.destroy',
+        'edit' => 'personal.comments.edit',
+    ]);
+});
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::get('/', \App\Http\Controllers\Admin\MainController::class)->name('admin.main.index');
 
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class)->names([
         'index' => 'admin.posts.index',
@@ -40,9 +63,16 @@ Route::group(['prefix' => 'admin'], function () {
         'destroy' => 'admin.tags.destroy',
         'edit' => 'admin.tags.edit',
     ]);
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->names([
+        'index' => 'admin.users.index',
+        'store' => 'admin.users.store',
+        'create' => 'admin.users.create',
+        'show' => 'admin.users.show',
+        'update' => 'admin.users.update',
+        'destroy' => 'admin.users.destroy',
+        'edit' => 'admin.users.edit',
+    ]);
 });
-
-
 
 Auth::routes();
 

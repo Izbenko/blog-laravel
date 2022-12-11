@@ -15,7 +15,7 @@
                      alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Роман Избенко</a>
+                <a href="#" class="d-block">Имя</a>
             </div>
         </div>
 
@@ -33,9 +33,9 @@
         </div>
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-header">ПАНЕЛЬ АДМИНИСТРАТОРА</li>
+                <li class="nav-header">ЛИЧНЫЙ КАБИНЕТ</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.main.index') }}" class="nav-link">
+                    <a href="{{ route('personal.main.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             ГЛАВНАЯ
@@ -43,34 +43,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.users.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
+                    <a href="{{ route('personal.liked.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-heart"></i>
                         <p>
-                            Пользователи
+                            Понравившиеся посты
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.posts.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-clipboard"></i>
+                    <a href="{{ route('personal.comments.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-comment"></i>
                         <p>
-                            Посты
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.categories.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th-list"></i>
-                        <p>
-                            Категории
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.tags.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>
-                            Теги
+                            Комментарии
                         </p>
                     </a>
                 </li>
