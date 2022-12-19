@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Personal;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Personal\Comment\UpdateRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return view('personal.comments.index');
+        $comments = auth()->user()->comments;
+        return view('personal.comments.index', compact('comments'));
     }
 
     /**
@@ -58,7 +60,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        return view('personal.comments.edit', compact('comment'));
     }
 
     /**
@@ -68,9 +70,12 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(UpdateRequest $request, Comment $comment)
     {
-        //
+        $data = $request->validated();
+        $comment->update($data);
+
+        return redirect()->route('personal.comments.index');
     }
 
     /**
@@ -81,6 +86,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        return redirect()->route('personal.comments.index');
     }
 }

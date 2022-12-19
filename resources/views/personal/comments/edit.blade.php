@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('personal.layouts.main')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -8,12 +8,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Редактирование поста "{{ $post->title }}"</h1>
+                        <h1 class="m-0">Редактирование комментария</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.main.index') }}">Главная</a></li>
-                            <li class="breadcrumb-item active">Посты</li>
+                            <li class="breadcrumb-item"><a href="{{ route('personal.main.index') }}">Главная</a></li>
+                            <li class="breadcrumb-item active">Комментарии</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -24,79 +24,14 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row w-50">
-                    <form action="{{ route('admin.posts.update', $post->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('personal.comments.update', $comment->id) }}" method="post" class="w-50">
                         @method('PATCH')
                         @csrf
                         <div class="form-group">
-                            <label>Название</label>
-                            <input type="text" class="form-control" name="title" placeholder="Название поста"
-                                   value="{{ $post->title }}">
-                            @error('title')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <textarea name="content" id="summernote">{{ $post->content }}</textarea>
+                            <textarea class="form-control" name="message">{{ $comment->message }}</textarea>
                             @error('content')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Добавить превью</label>
-                            <div class="w-25 mb-2">
-                                <img src="{{ asset('storage/' . $post->preview_image) }}" alt="preview_image" class="w-50">
-                            </div>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="preview_image">
-                                    <label class="custom-file-label">Выберите файл</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Загрузить</span>
-                                </div>
-                            </div>
-                            @error('preview_image')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Добавить главное изображение</label>
-                            <div class="w-25 mb-2">
-                                <img src="{{ asset('storage/' . $post->main_image) }}" alt="main_image" class="w-50">
-                            </div>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="main_image">
-                                    <label class="custom-file-label">Выберите файл</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Загрузить</span>
-                                </div>
-                            </div>
-                            @error('main_image')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Выберите категорию</label>
-                            <select name="category_id" class="form-control">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ $category->id == $post->category_id ? ' selected' : '' }}
-                                    >{{ $category->title }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Выберите теги</label>
-                            <select class="select2" name="tag_ids[]" multiple="multiple"
-                                    data-placeholder="Выберите теги"
-                                    style="width: 100%;">
-                                @foreach($tags as $tag)
-                                    <option
-                                        {{ is_array($post->tags->pluck('id')->toArray()) && in_array($tag->id, $post->tags->pluck('id')->toArray()) ? ' selected' : '' }} value="{{ $tag->id }}">{{ $tag->title }}</option>
-                                @endforeach
-                            </select>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Обновить">
