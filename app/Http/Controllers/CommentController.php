@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\Comment\StoreRequest;
+use App\Models\Comment;
 use App\Models\Post;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(6);
-        $randomPosts = Post::get()->random(4);
-        $likedPosts = Post::withCount('likedUsers')->orderBy('liked_users_count', 'DESC')->get()->take(4);
-        return view('posts.index', compact('posts', 'randomPosts', 'likedPosts'));
+        //
     }
 
     /**
@@ -37,32 +35,34 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Post $post, StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['user_id'] = auth()->user()->id;
+        $data['post_id'] = $post->id;
+
+        Comment::create($data);
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Comment $comment)
     {
-        $date = Carbon::parse($post->created_at);
-
-        $relatedPosts = Post::where('category_id', $post->category_id)->where('id', '!=', $post->id)->get()->take(3);
-        return view('posts.show', compact('post', 'date', 'relatedPosts'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Comment $comment)
     {
         //
     }
@@ -71,10 +71,10 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Comment $comment)
     {
         //
     }
@@ -82,10 +82,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Comment $comment)
     {
         //
     }

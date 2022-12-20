@@ -1,14 +1,15 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [PostController::class, 'index']);
+Route::get('/', [\App\Http\Controllers\MainController::class, 'index'])->name('main.index');
 
-Route::resource('posts', PostController::class);
+Route::resource('posts', \App\Http\Controllers\PostController::class);
+Route::resource('posts.comments', \App\Http\Controllers\CommentController::class);
+Route::resource('posts.likes', \App\Http\Controllers\LikeController::class);
 
 Route::group(['prefix' => 'personal', 'middleware' => 'auth'], function () {
     Route::get('/', \App\Http\Controllers\Personal\MainController::class)->name('personal.main.index');
@@ -77,3 +78,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
